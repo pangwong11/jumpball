@@ -7,5 +7,5 @@ The purpose of this project is to build a full stack data analysis application t
 
 Data sources:
 
-nbastuffer.com
+http://www.basketball-reference.com/leagues
 stats.nba.com
