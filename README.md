@@ -9,3 +9,13 @@ Data sources:
 
 http://www.basketball-reference.com/leagues
 stats.nba.com
+
+1) What is your domain?
+Basketball statistics
+
+2) What kind of study or metrics your team will take with the data collected?
+Study effectiveness of players.  Find trends from players historical statistics and predict effectiveness as a player.  Make interesting analysis based on players' statistics.  Capture data source
+outside of basketball players' statistics to find players' trends / humorous stereotypes (eg: Do players having romantic relationship with celebrities affect their on the court effectiveness? etc...)
+
+3) How will you visualize your data?
+Graphs, charts
