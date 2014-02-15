@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Python module to collect data from basketball-reference.com
+# Python module to collect data from basketball-reference.com and output the collected data in a CSV formatted file
 
 import urllib2
 import argparse
