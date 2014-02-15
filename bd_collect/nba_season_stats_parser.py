@@ -1,10 +1,24 @@
 #!/usr/bin/python
 
+# Python module to collect data from basketball-reference.com
+
 import urllib2
+import argparse
 from bs4 import BeautifulSoup
 import csv
 
-page = urllib2.urlopen("http://www.basketball-reference.com/leagues/NBA_2012_advanced.html")
+# Argument parsing
+parser = argparse.ArgumentParser(description='Jumpball collect')
+parser.add_argument('-s', '--season', action='store', help='Season in year', dest="year_season", required=True)
+#args = vars(parser.parse_args())
+args = parser.parse_args()
+
+season = args.year_season
+print season
+
+
+
+page = urllib2.urlopen("http://www.basketball-reference.com/leagues/NBA_%s_advanced.html" % season)
 content = page.read()
 
 soup = BeautifulSoup(content)
@@ -12,7 +26,7 @@ soup = BeautifulSoup(content)
 table = soup.find('table', id="advanced")
 rows = table.findAll('tr')
 
-f = csv.writer(open('output.csv', 'w'))
+f = csv.writer(open('season_%s_players_stats.csv' % season, 'w'))
 
 # CSV file header
 f.writerow(["name" ,"pos" ,"age" ,"team" ,"games" ,"minutes" ,"eff_rating" ,"ts_perc" ,"efg_perc" ,"ft_rate" ,"threept_rate" ,"orb_perc" ,"drb_perc" ,"trb_perc" ,"ast_perc" ,"stl_perc" ,"blk_perc" ,"tov_perc" ,"usg_perc" ,"off_rate" ,"def_rate" ,"ofw_share" ,"defw_share" ,"win_share" ,"win48_share"])
