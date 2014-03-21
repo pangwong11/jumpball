@@ -7,13 +7,15 @@ import argparse
 from bs4 import BeautifulSoup
 import csv
 import re
+import os
+
+# Variables
+data_directory="nba_data"
 
 # Argument parsing
 parser = argparse.ArgumentParser(description='Jumpball collect')
 parser.add_argument('-s', '--season', action='store', help='Season in year', dest="year_season", required=True)
 parser.add_argument('-t', '--team', action='store', help='NBA Team', dest="nba_team", required=True)
-#parser.add_argument('-p', '--playoff', action='store', help='Playoff (Y/N)', dest="playoff", required=True)
-#args = vars(parser.parse_args())
 args = parser.parse_args()
 
 season = args.year_season
@@ -25,14 +27,18 @@ print team
 
 page = urllib2.urlopen("http://www.basketball-reference.com/teams/%s/%s.html" % (team, season ))
 
+if not os.path.exists(data_directory):
+    os.makedirs(data_directory)
 
-f1 = csv.writer(open('season_%s_%s_players_height_weight.csv' % (season, team ), 'w') )
-f2 = csv.writer(open('season_%s_%s_record.csv' % (season, team ), 'w') )
+f1 = csv.writer(open('./%s/season_%s_%s_players_height_weight.csv' % (data_directory, season, team ), 'w') )
+f2 = csv.writer(open('./%s/season_%s_%s_record.csv' % (data_directory, season, team ), 'w') )
 
 # CSV file header
 #f1.writerow(["team", "name" ,"ht", "wt"])
 
 def getStatsFromWeb(page):
+
+
     content = page.read()
 
     soup = BeautifulSoup(content)
