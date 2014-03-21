@@ -62,7 +62,7 @@ def analyzeTeamStats():
                 ht_mean = np.array(teamStats_list[1], dtype=float).mean()
                 wt_mean = np.array(teamStats_list[2], dtype=float).mean()
     
-                ht_wt_mean = [ ht_mean, wt_mean ]
+                ht_wt_mean = [ team, ht_mean, wt_mean ]
                 print ht_wt_mean_set+ht_wt_mean
     
 
