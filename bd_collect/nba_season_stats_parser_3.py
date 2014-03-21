@@ -23,18 +23,22 @@ team = args.nba_team
 print season
 print team
 
-
-
 page = urllib2.urlopen("http://www.basketball-reference.com/teams/%s/%s.html" % (team, season ))
+
+season_data_directory=("%s/%s" % (data_directory, season) )
 
 if not os.path.exists(data_directory):
     os.makedirs(data_directory)
+if not os.path.exists(season_data_directory):
+    os.makedirs(season_data_directory)
 
-f1 = csv.writer(open('./%s/season_%s_%s_players_height_weight.csv' % (data_directory, season, team ), 'w') )
-f2 = csv.writer(open('./%s/season_%s_%s_record.csv' % (data_directory, season, team ), 'w') )
+
+f1 = csv.writer(open('./%s/season_%s_%s_players_height_weight.csv' % (season_data_directory, season, team ), 'w') )
+f2 = csv.writer(open('./%s/season_%s_%s_record.csv' % (season_data_directory, season, team ), 'w') )
 
 # CSV file header
-#f1.writerow(["team", "name" ,"ht", "wt"])
+f1.writerow(["team", "name" ,"ht", "wt"])
+f2.writerow(["team", "win", "loss", "wl_perc"])
 
 def getStatsFromWeb(page):
 
