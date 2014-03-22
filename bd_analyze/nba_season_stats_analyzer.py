@@ -50,8 +50,9 @@ def readTeamRecord(file_name):
 
 
 # Iterate through each NBA team stats file and output find the mean for each teams weight and height
-def analyzeTeamStats():
+def analyzeTeamStats(year):
 
+    data_directory = ("/Users/aidan.wong/Documents/mystuff/cs454/jumpball/bd_collect/nba_data/%s/" % season)
     for root, dirs, files in os.walk(data_directory):
         for f in files:
             if f.endswith("agg_data.csv"):
@@ -65,8 +66,9 @@ def analyzeTeamStats():
     
                 data = [ team, ht_mean, wt_mean, wl_perc ]
                 print data_set+data
+                return data_set+data
     
 
-analyzeTeamStats()
+#analyzeTeamStats(year)
 
 
