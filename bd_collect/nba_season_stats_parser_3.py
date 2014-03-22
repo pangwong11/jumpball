@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import csv
 import re
 import os
+import itertools as IT
 
 # Variables
 data_directory="nba_data"
@@ -32,13 +33,21 @@ if not os.path.exists(data_directory):
 if not os.path.exists(season_data_directory):
     os.makedirs(season_data_directory)
 
+player_stats_file = "./%s/season_%s_%s_players_height_weight.csv" % (season_data_directory, season, team )
+team_stats_file = "./%s/season_%s_%s_record.csv" % (season_data_directory, season, team )
+agg_stats_file = "./%s/season_%s_%s_agg_data.csv" % (season_data_directory, season, team)
 
-f1 = csv.writer(open('./%s/season_%s_%s_players_height_weight.csv' % (season_data_directory, season, team ), 'w') )
-f2 = csv.writer(open('./%s/season_%s_%s_record.csv' % (season_data_directory, season, team ), 'w') )
+stat_files = ['player_stats_file', 'team_stats_file']
+
+
+f1 = csv.writer(open(player_stats_file, 'w') )
+f2 = csv.writer(open(team_stats_file, 'w') )
+f3 = csv.writer(open(agg_stats_file, 'w') )
 
 # CSV file header
 f1.writerow(["team", "name" ,"ht", "wt"])
 f2.writerow(["team", "win", "loss", "wl_perc"])
+f3.writerow(["team", "name", "ht", "wt" ,"wl_perc"])
 
 def getStatsFromWeb(page):
 
@@ -75,6 +84,7 @@ def getStatsFromWeb(page):
         wt = cells[4].find(text=True)
     
         f1.writerow([team, name, ht, wt])
+        f3.writerow([team, name, ht, wt, wl_perc])
 
 
 getStatsFromWeb(page);
