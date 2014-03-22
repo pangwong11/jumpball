@@ -49,7 +49,7 @@
 \pagestyle{fancy} % All pages have headers and footers
 \fancyhead{} % Blank out the default header
 \fancyfoot{} % Blank out the default footer
-\fancyhead[C]{Beautiful Data - Flickr Project Proposal $\bullet$ February 2014} % Custom header text
+\fancyhead[C]{Beautiful Data - NBA Analyzer Project $\bullet$ March 2014} % Custom header text
 \fancyfoot[RO,LE]{\thepage} % Custom footer text
 
 %----------------------------------------------------------------------------------------
@@ -64,7 +64,7 @@
 \textsc{Song Xiao}\\%[2mm]
 \normalsize California State University, Los Angeles \\[2mm] % Your institution
 \normalsize \href{mailto:aidanw7@gmail.com}{aidanw7@gmail.com}\\ % Your email address
-\normalsize \href{mailto:yoho.song@gmail.com}{yohoi.song@gmail.com}\\ % Your email address
+\normalsize \href{mailto:yoho.song@gmail.com}{yoho.song@gmail.com}\\ % Your email address
 \vspace{-5mm}
 }
 \date{}
@@ -105,56 +105,114 @@
 
 We collect the data of height and weight for each player in each team from NBA-Referance website by using a python library called Beautiful Soup. This library will allow us to scrap and parse the data on webpage and store them in the data structure we want to use.The Beautiful Soup provides a few simple methods and Pythonic idioms for navigating, searching, and modifying a parse tree. It automatically converts incoming documents to Unicode and outgoing documents to UTF-8 so we don't have to think about encodings. We store height and weight into arrays so that we can extract and use them laer.
 
+
 \begin{table}[H]
 \caption{Example table}
 \centering
 \begin{tabular}{llr}
 \toprule
-\multicolumn{2}{c}{Team: BOS} \\
+\multicolumn{2}{c}{NBA Season 2010 - 2011} \\
+\cmidrule(r){1-2}
+Team name & Winning Percentage \\
+\midrule
+BOS & 0.683 &\\
+MIA	& 0.707 &\\	
+CHI & 0.756 &\\	
+OKC & 0.671 &\\	
+LAC	& 0.390 &\\
+DEN & 0.610 &\\	
+GSW	& 0.439 &\\	
+HOU & 0.524 &\\	
+
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\caption{Example table}
+\centering
+\begin{tabular}{llr}
+\toprule
+\multicolumn{2}{c}{Team: BOS Season 2010 - 2011} \\
 \cmidrule(r){1-2}
 Player name & Height & Weight \\
 \midrule
-Paul pierce & 6.6 & $230$ \\
-Richard & Miles & $2$ \\
+Paul pierce & 6.06 & $230$\\
+Ray Allen	& 6.05 & $205$\\	
+Carlos Arroyo & 6.02 & $202$\\	
+Avery Bradley & 6.02 & $180$\\	
+Marquis Daniels	& 6.06 & $200$\\
+Glen Davis &6.09& $289$\\	
+Semih Erden	&7.00& $240$\\	
+Kevin Garnett &6.11& $220$\\	
+Jeff Green &6.09& $235$\\	
+Luke Harangody	&6.08&	$246$\\	
+Chris Johnson	&6.11& $210$\\	
+Nenad Krstic	&7.00& $240$\\
+Troy Murphy	&6-11& $245$\\	
+Jermaine O'Neal	&6.11&	$226$\\	
+Nate Robinson &5.09& $180$\\
+Rajon Rondo	&6.01& $171$\\	
+
+
 \bottomrule
 \end{tabular}
 \end{table}
 
 %------------------------------------------------
 
-\section{Results}
+\section{Method}
+
+
+For the Analyzation part, We calculate the mean of height and weight for total players of each team and we will get the table like below:
 
 \begin{table}[H]
 \caption{Example table}
 \centering
 \begin{tabular}{llr}
 \toprule
-\multicolumn{2}{c}{Name} \\
+\multicolumn{2}{c}{Season 2010 - 2011} \\
 \cmidrule(r){1-2}
-First name & Last Name & Grade \\
+Team Name & Mean Height & Mean weight \\
 \midrule
-John & Doe & $7.5$ \\
-Richard & Miles & $2$ \\
+BOS & 6.53 & $224$\\
+MIA	& 6.47 & $225$\\	
+CHI & 6.58 & $219$\\	
+OKC & 6.71 & $227$\\	
+LAC	& 6.89 & $218$\\
+DEN & 6.85 & $223$\\	
+GSW	& 6.76 & $224$\\	
+HOU & 6.65 & $219$\\	
 \bottomrule
 \end{tabular}
 \end{table}
-flipsum
 
 \begin{equation}
-\label{eq:emc}
-e = mc^2
+\label{}
+Mean Height = Total Player Height/Player Numbers
 \end{equation}
+
+\begin{equation}
+\label{}
+Mean Weight = Total Player Weight/Player Numbers
+\end{equation}
+
+Then, we plot each team's mean weight and height into a two dimensional graph, which x-axis stands for height and y-axis stands for weight. Those are our training data. Next initiate the kNN algorithm and pass the trainng data to train the kNN (It constructs a search tree).
+
+After that, we can grab one team's height and weight values for the current season and calculate the mean values, which will be regarded as our new input data. Now we can plot the new input data into our graph and our program will classify it based on the winning percentage with the help of kNN in OpenCV. Before going to kNN, we need to know something on our test data (data of new input). Our data should be a floating point array with size number of testdata * number of features.Then we find the nearest neighbours of new input data. We can specify how many neighbours we want. It returns:
+1.The label given to new-comer depending upon the kNN theory we saw earlier. If you want Nearest Neighbour algorithm, just specify k=1 where k is the number of neighbours.
+2. The labels of k-Nearest Neighbours.
+3. Corresponding distances from new input data to each nearest neighbour.
+
+
 
 
 %------------------------------------------------
 
-\section{Discussion}
+\section{Conclusion}
 
-\subsection{Subsection One}
-
-
-\subsection{Subsection Two}
-
+Finally, we could predict how good a team can be for the current season based on past data. For example, if we input the mean height and weight of Miami Heat, after applying the K-Nearest Neighbour method, we could find one closest team that has the same height and weight distribution from previous season. Then, we can predict Miami Heat's winning percentage for the current season since it close to the winning percentage of the team we have in the trainning data.
 
 %----------------------------------------------------------------------------------------
 % REFERENCE LIST
@@ -162,11 +220,11 @@ e = mc^2
 
 \begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
 
-\bibitem[6,000,000,000]{http://blog.flickr.net/en/2011/08/04/6000000000/}
-Figueredo, A.~J. and Wolf, P. S.~A. (2009).
+http://www.basketball-reference.com/
 
-\bibitem[Flickr Services]{http://www.flickr.com/services/api/}
-The App Garden: API Documentation.
+http://www.http://opencv-python-tutroals.readthedocs.org
+
+
 \end{thebibliography}
 
 %----------------------------------------------------------------------------------------
