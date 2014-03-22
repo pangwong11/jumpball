@@ -25,14 +25,14 @@ team_stat_files = glob.glob(team_stat_path)
 data_types = ['Height', 'Weight', 'WL_PERC']
 num_data_types = len(data_types)
 
-ht_wt_mean_set=[]
+data_set=[]
 
 def readTeamStats(file_name):
-    dtypes = np.dtype({ 'names' : ('team', 'Height', 'Weight'),
-                        'formats' : ['S10', np.float, np.float] })
+    dtypes = np.dtype({ 'names' : ('team', 'Height', 'Weight', 'WL_PERC'),
+                        'formats' : ['S10', np.float, np.float, np.float] })
 
     data = np.loadtxt(file_name, delimiter=',', skiprows=1,
-           usecols=(0,2,3), dtype=dtypes)
+           usecols=(0,2,3,4), dtype=dtypes)
 
     #data_list = list(data)
 
@@ -54,16 +54,17 @@ def analyzeTeamStats():
 
     for root, dirs, files in os.walk(data_directory):
         for f in files:
-            if f.endswith("weight.csv"):
+            if f.endswith("agg_data.csv"):
                 teamStats = readTeamStats(data_directory + f)
                 
                 teamStats_list =  zip(*teamStats)
                 team = teamStats_list[0][0]
                 ht_mean = np.array(teamStats_list[1], dtype=float).mean()
                 wt_mean = np.array(teamStats_list[2], dtype=float).mean()
+                wl_perc = teamStats_list[3][0]
     
-                ht_wt_mean = [ team, ht_mean, wt_mean ]
-                print ht_wt_mean_set+ht_wt_mean
+                data = [ team, ht_mean, wt_mean, wl_perc ]
+                print data_set+data
     
 
 analyzeTeamStats()
