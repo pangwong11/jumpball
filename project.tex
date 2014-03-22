@@ -1,0 +1,176 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Journal Article
+% LaTeX Template
+% Version 1.3 (9/9/13)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+% PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[twoside]{article}
+
+\usepackage[sc]{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\linespread{1.05} % Line spacing - Palatino needs more space between lines
+\usepackage{microtype} % Slightly tweak font spacing for aesthetics
+
+\usepackage[hmarginratio=1:1,top=32mm,columnsep=20pt]{geometry} % Document margins
+\usepackage{multicol} % Used for the two-column layout of the document
+\usepackage[hang, small,labelfont=bf,up,textfont=it,up]{caption} % Custom captions under/above floats in tables or figures
+\usepackage{booktabs} % Horizontal rules in tables
+\usepackage{float} % Required for tables and figures in the multi-column environment - they need to be placed in specific locations with the [H] (e.g. \begin{table}[H])
+\usepackage{hyperref} % For hyperlinks in the PDF
+
+\usepackage{lettrine} % The lettrine is the first enlarged letter at the beginning of the text
+\usepackage{paralist} % Used for the compactitem environment which makes bullet points with less space between them
+
+\usepackage{abstract} % Allows abstract customization
+\renewcommand{\abstractnamefont}{\normalfont\bfseries} % Set the "Abstract" text to bold
+\renewcommand{\abstracttextfont}{\normalfont\small\itshape} % Set the abstract itself to small italic text
+
+\usepackage{titlesec} % Allows customization of titles
+\renewcommand\thesection{\Roman{section}} % Roman numerals for the sections
+\renewcommand\thesubsection{\Roman{subsection}} % Roman numerals for subsections
+\titleformat{\section}[block]{\large\scshape\centering}{\thesection.}{1em}{} % Change the look of the section titles
+\titleformat{\subsection}[block]{\large}{\thesubsection.}{1em}{} % Change the look of the section titles
+
+\usepackage{fancyhdr} % Headers and footers
+\pagestyle{fancy} % All pages have headers and footers
+\fancyhead{} % Blank out the default header
+\fancyfoot{} % Blank out the default footer
+\fancyhead[C]{Beautiful Data - Flickr Project Proposal $\bullet$ February 2014} % Custom header text
+\fancyfoot[RO,LE]{\thepage} % Custom footer text
+
+%----------------------------------------------------------------------------------------
+% TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\title{\vspace{-15mm}\fontsize{24pt}{10pt}\selectfont\textbf{Beautiful Data: \\[2mm] NBA Statistics Analyzer}} % Article title
+
+\author{
+\large
+\textsc{Pang C. Wong}\\%[2mm]
+\textsc{Song Xiao}\\%[2mm]
+\normalsize California State University, Los Angeles \\[2mm] % Your institution
+\normalsize \href{mailto:aidanw7@gmail.com}{aidanw7@gmail.com}\\ % Your email address
+\normalsize \href{mailto:yoho.song@gmail.com}{yohoi.song@gmail.com}\\ % Your email address
+\vspace{-5mm}
+}
+\date{}
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle{} % Insert title
+
+\thispagestyle{fancy} % All pages have headers and footers
+
+%----------------------------------------------------------------------------------------
+% ABSTRACT
+%----------------------------------------------------------------------------------------
+
+\begin{abstract}
+
+\noindent Big data is a popular term used to describe the exponential growth and availability of data, both structured and unstructured. For the most part, big data projects have been an exercise in computer science that, while being of enormous potential benefit to the business, has had little relevance to the sports, such as the National Basketball Association. And for now, big data may be as important to sports, as the Internet has become. Why? More data may lead to more accurate analyses,which may lead to more confident decision making for trading, drafting and coaching. A better decision can mean greater operational efficiencies, cost reductions and reduced risk. For our project, we will be using a widely used statistical analysis method,K Nearest Neighbour, to find out how the height and weight of nba players affect the wining percertage.
+
+\end{abstract}
+
+
+%----------------------------------------------------------------------------------------
+% ARTICLE CONTENTS
+%----------------------------------------------------------------------------------------
+
+\begin{multicols}{2} % Two-column layout throughout the main article text
+
+\section{Introduction}
+
+\lettrine[nindent=0em,lines=3]{H}eight and weight are probably the most common and basic data we can find for a NBA player. Normally, we could say, a player with higher height or bigger weight may have greater advantages than other. However, if a player has heavey weight but short in height, or is taller than other players but lack of strength,it is hard for us to judge if he can make contribution to the team. Therefore, it is meanful for us to take the incluences of the weight and height of players into consideration and analysis how those two values affect the winning percentage of a team. if we are able to find the relationship, we can predict the perfomance of a team in the current season based on previous seasons' data. 
+ 
+
+%------------------------------------------------
+
+\section{Collection}
+
+We collect the data of height and weight for each player in each team from NBA-Referance website by using a python library called Beautiful Soup. This library will allow us to scrap and parse the data on webpage and store them in the data structure we want to use.The Beautiful Soup provides a few simple methods and Pythonic idioms for navigating, searching, and modifying a parse tree. It automatically converts incoming documents to Unicode and outgoing documents to UTF-8 so we don't have to think about encodings. We store height and weight into arrays so that we can extract and use them laer.
+
+\begin{table}[H]
+\caption{Example table}
+\centering
+\begin{tabular}{llr}
+\toprule
+\multicolumn{2}{c}{Team: BOS} \\
+\cmidrule(r){1-2}
+Player name & Height & Weight \\
+\midrule
+Paul pierce & 6.6 & $230$ \\
+Richard & Miles & $2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%------------------------------------------------
+
+\section{Results}
+
+\begin{table}[H]
+\caption{Example table}
+\centering
+\begin{tabular}{llr}
+\toprule
+\multicolumn{2}{c}{Name} \\
+\cmidrule(r){1-2}
+First name & Last Name & Grade \\
+\midrule
+John & Doe & $7.5$ \\
+Richard & Miles & $2$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+flipsum
+
+\begin{equation}
+\label{eq:emc}
+e = mc^2
+\end{equation}
+
+
+%------------------------------------------------
+
+\section{Discussion}
+
+\subsection{Subsection One}
+
+
+\subsection{Subsection Two}
+
+
+%----------------------------------------------------------------------------------------
+% REFERENCE LIST
+%----------------------------------------------------------------------------------------
+
+\begin{thebibliography}{99} % Bibliography - this is intentionally simple in this template
+
+\bibitem[6,000,000,000]{http://blog.flickr.net/en/2011/08/04/6000000000/}
+Figueredo, A.~J. and Wolf, P. S.~A. (2009).
+
+\bibitem[Flickr Services]{http://www.flickr.com/services/api/}
+The App Garden: API Documentation.
+\end{thebibliography}
+
+%----------------------------------------------------------------------------------------
+
+\end{multicols}
+
+\end{document}
