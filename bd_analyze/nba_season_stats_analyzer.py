@@ -23,7 +23,6 @@ import ast
 #next_season = args.next_year_season
 
 #data_directory = "./nba_data"
-#data_directory = ("/Users/Song/Study/CS454/jumpball/bd_collect/nba_data/%s/" % season)
 team_stat_path = './nba_data/*.csv'
 team_stat_files = glob.glob(team_stat_path)
 
