@@ -8,7 +8,7 @@ import glob
 import sys 
 import re
 import argparse
-import cv2
+#import cv2
 import random
 
 

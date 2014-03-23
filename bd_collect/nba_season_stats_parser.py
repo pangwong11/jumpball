@@ -6,61 +6,88 @@ import urllib2
 import argparse
 from bs4 import BeautifulSoup
 import csv
+import re
+import os
+import itertools as IT
+
+# Variables
+data_directory="nba_data"
 
 # Argument parsing
 parser = argparse.ArgumentParser(description='Jumpball collect')
 parser.add_argument('-s', '--season', action='store', help='Season in year', dest="year_season", required=True)
-#args = vars(parser.parse_args())
+parser.add_argument('-t', '--team', action='store', help='NBA Team', dest="nba_team", required=True)
 args = parser.parse_args()
 
 season = args.year_season
+team = args.nba_team
 print season
+print team
+
+page = urllib2.urlopen("http://www.basketball-reference.com/teams/%s/%s.html" % (team, season ))
+
+season_data_directory=("%s/%s" % (data_directory, season) )
+
+if not os.path.exists(data_directory):
+    os.makedirs(data_directory)
+if not os.path.exists(season_data_directory):
+    os.makedirs(season_data_directory)
+
+player_stats_file = "./%s/season_%s_%s_players_height_weight.csv" % (season_data_directory, season, team )
+team_stats_file = "./%s/season_%s_%s_record.csv" % (season_data_directory, season, team )
+agg_stats_file = "./%s/season_%s_%s_agg_data.csv" % (season_data_directory, season, team)
+
+stat_files = ['player_stats_file', 'team_stats_file']
 
 
-
-page = urllib2.urlopen("http://www.basketball-reference.com/leagues/NBA_%s_advanced.html" % season)
-content = page.read()
-
-soup = BeautifulSoup(content)
-
-table = soup.find('table', id="advanced")
-rows = table.findAll('tr')
-
-f = csv.writer(open('season_%s_players_stats.csv' % season, 'w'))
+f1 = csv.writer(open(player_stats_file, 'w') )
+f2 = csv.writer(open(team_stats_file, 'w') )
+f3 = csv.writer(open(agg_stats_file, 'w') )
 
 # CSV file header
-f.writerow(["name" ,"pos" ,"age" ,"team" ,"games" ,"minutes" ,"eff_rating" ,"ts_perc" ,"efg_perc" ,"ft_rate" ,"threept_rate" ,"orb_perc" ,"drb_perc" ,"trb_perc" ,"ast_perc" ,"stl_perc" ,"blk_perc" ,"tov_perc" ,"usg_perc" ,"off_rate" ,"def_rate" ,"ofw_share" ,"defw_share" ,"win_share" ,"win48_share"])
+f1.writerow(["team", "name" ,"ht", "wt"])
+f2.writerow(["team", "win", "loss", "wl_perc"])
+f3.writerow(["team", "name", "ht", "wt" ,"wl_perc"])
 
-for tr in rows:
-  cells = tr.findAll('td')
-  if len(cells) == 26:
-    name = cells[1].find(text=True)
-    pos = cells[2].find(text=True)
-    age = cells[3].find(text=True)
-    team = cells[4].find(text=True)
-    games = cells[5].find(text=True)
-    minutes = cells[6].find(text=True)
-    eff_rating = cells[7].find(text=True)
-    ts_perc = cells[8].find(text=True)
-    efg_perc = cells[9].find(text=True)
-    ft_rate = cells[10].find(text=True)
-    threept_rate = cells[11].find(text=True)
-    orb_perc = cells[12].find(text=True)
-    drb_perc = cells[13].find(text=True)
-    trb_perc = cells[14].find(text=True)
-    ast_perc = cells[15].find(text=True)
-    stl_perc = cells[16].find(text=True)
-    blk_perc = cells[17].find(text=True)
-    tov_perc = cells[18].find(text=True)
-    usg_perc = cells[19].find(text=True)
-    off_rate = cells[20].find(text=True)
-    def_rate = cells[21].find(text=True)
-    ofw_share = cells[22].find(text=True)
-    defw_share = cells[23].find(text=True)
-    win_share = cells[24].find(text=True)
-    win48_share = cells[25].find(text=True)
+def getStatsFromWeb(page):
 
-    f.writerow([name, pos, age, team, games, minutes, eff_rating, ts_perc, efg_perc, ft_rate, threept_rate, orb_perc, drb_perc, trb_perc, ast_perc, stl_perc, blk_perc, tov_perc, usg_perc, off_rate, def_rate, ofw_share, defw_share, win_share, win48_share])
+
+    content = page.read()
+
+    soup = BeautifulSoup(content)
+
+
+    for elem in soup(text=re.compile(r'Record:')):
+        record = elem.next_element.strip().split(',', 1)[0]
+        w_record = float(record.split('-', 1)[0])
+        l_record = float(record.split('-', 1)[1])
+
+    print w_record
+    print l_record
+    wl_perc = w_record / (w_record + l_record)
+    print wl_perc
+    
+    f2.writerow([team, w_record, l_record, wl_perc])
+
+    roster_table = soup.find('table', id="roster")
+    rows = roster_table.findAll('tr')
+
+    for tr in rows:
+        cells = tr.findAll('td')
+        #if len(cells) > 0:
+        if len(cells) == 0:
+            continue
+
+        #print cells
+        name = cells[1].find(text=True)
+        ht = cells[3].find(text=True).replace("-", ".")
+        wt = cells[4].find(text=True)
+    
+        f1.writerow([team, name, ht, wt])
+        f3.writerow([team, name, ht, wt, wl_perc])
+
+
+getStatsFromWeb(page);
 
 
 
